@@ -73,22 +73,17 @@ When (/^I have opted to see movies rated: "(.*?)"$/) do |rating_list|
       uncheck "ratings_#{value}"
   end
   click_button "Refresh"
- 
 end
 
 Then (/^I should see only movies rated: "(.*?)"$/) do |rating|
     #loop in a loop
     #array
-    rating_list = ['G', 'PG', 'PG-13', 'R', 'NC-17']
-    rating.split(',').each do |x|
-        x = x.strip
-        rating_list.delete(x)
-    end
-   result=true
+   result=false
    all("tr").each do |tr|
-       rating_list.each do |no_rating|
-            if tr.has_content?(no_rating)
-                result = false
+       rating.split(',').each do |rating_list|
+           rating_list = rating_list.strip
+            if tr.has_content?(rating_list)
+                result = true
                 break
             end
         end
